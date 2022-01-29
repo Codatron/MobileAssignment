@@ -10,13 +10,16 @@ public class Tile : MonoBehaviour
     [SerializeField] private Vector2 tilePos;
     [SerializeField] private GameObject tileHighlight;
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private ScoreManager scoreManager;
     private Target target;
 
     public bool isOccupied = false;
+    public bool hasBeenPicked = false;
 
     private void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        scoreManager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
 
         tilePos = transform.position;
     }
@@ -34,24 +37,34 @@ public class Tile : MonoBehaviour
 
     private void OnMouseOver()
     {
-        tileHighlight.SetActive(true);
+        if (!gameManager.isGameOver)
+            tileHighlight.SetActive(true);
     }
 
     private void OnMouseUp()
     {
-        if (CompareTag("Tile") == true && !gameManager.isGameOver)
+        if (!gameManager.isGameOver)
         {
+            if (!hasBeenPicked)
+            {
+                gameManager.tries++;
+                scoreManager.AddMouseClicks(gameManager.tries);
+            }
+
             if (isOccupied)
             {
+                hasBeenPicked = true;
                 target.RevealMe();
                 gameObject.SetActive(false);
                 //Debug.Log("You found me!");
             }
             else
             {
+                hasBeenPicked = true;
                 gameObject.SetActive(false);
                 //Debug.Log("Try again!");
             }
+
         }
     }
 

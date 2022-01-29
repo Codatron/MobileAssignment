@@ -40,9 +40,8 @@ public class SpawnManager : MonoBehaviour
             int y = Random.Range(gridStartPos.y, gridOffset.y);
 
             Vector2 randomPos = new Vector2(x, y);
-
+           
             var targetToSpawn = Instantiate(targets[i], randomPos, Quaternion.identity);
-
             grid.gridP1[x, y].GetComponent<Tile>().ConnectToTarget(targetToSpawn);
         }
     }

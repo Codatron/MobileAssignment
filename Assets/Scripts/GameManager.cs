@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public bool isGameOver = false;
     public bool isPaused = false;
 
-    private int tries = 0;
+    public int tries = 0;
     private ScoreManager scoreManager;
 
     private void Awake()
@@ -26,13 +26,25 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         Pausegame();
-        CountTries();
         GameOver();
+    }
+    private void Pausegame()
+    {
+        if (isPaused)
+        {
+            Time.timeScale = 0.0f;
+            Debug.Log("Game is paused!");
+        }
+        else
+        {
+            Time.timeScale = 1.0f;
+        }
     }
 
     private void GameOver()
     {
-        if (scoreManager.totalItems == 0)
+        //TODO: Change magic number
+        if (scoreManager.totalItems == 0 || tries == 15)
         {
             isGameOver = true;
             Time.timeScale = 0.0f;
@@ -55,26 +67,4 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Pausegame()
-    {
-        if (isPaused)
-        {
-            Time.timeScale = 0.0f;
-            Debug.Log("Game is paused!");
-        }
-        else
-        {
-            Time.timeScale = 1.0f;
-        }
-    }
-
-    public void CountTries()
-    {
-        if (Input.GetMouseButtonUp(0))
-        {
-            tries++;
-            scoreManager.AddMouseClicks(tries);
-            Debug.Log(tries);
-        }
-    }
 }
