@@ -15,12 +15,12 @@ public class SpawnManager : MonoBehaviour
     {
         grid = GameObject.Find("GridManager").GetComponent<GridManager>();
 
-        SpawnTargets(grid.gridStartPosP1, grid.gridOffsetP1);
-
+        SpawnMultiple(grid.gridStartPosP1, grid.width, grid.height);
+        //SpawnTargets(grid.gridStartPosP1, grid.gridOffsetP1);
         //SpawnTargets(grid.gridStartPosP2, grid.gridOffsetP2);
     }
 
-    public void SpawnTarget(int gridWidth, int gridHeight)
+    public void SpawnSingle(int gridWidth, int gridHeight)
     {
         //int x = Random.Range(0, gridWidth);
         //int y = Random.Range(0, gridHeight);
@@ -32,17 +32,24 @@ public class SpawnManager : MonoBehaviour
         //targetPos = targetToSpawn.transform.position;
     }
 
-    public void SpawnTargets(Vector2Int gridStartPos, Vector2Int gridOffset)
+    public void SpawnMultiple(Vector2Int offset, int w, int h)
     {
-        for (int i = 0; i < targets.Length; i++)
-        {
-            int x = Random.Range(gridStartPos.x, gridOffset.x);
-            int y = Random.Range(gridStartPos.y, gridOffset.y);
+        int i = 0;
 
-            Vector2 randomPos = new Vector2(x, y);
+        while (i < targets.Length)
+        {
+            int x = Random.Range(0, w);
+            int y = Random.Range(0, h);
            
-            var targetToSpawn = Instantiate(targets[i], randomPos, Quaternion.identity);
-            grid.gridP1[x, y].GetComponent<Tile>().ConnectToTarget(targetToSpawn);
+            Vector2 randomPos = new Vector2(x, y);
+
+            if (!grid.gridP1[x, y].GetComponent<Tile>().isOccupied)
+            {
+                var targetToSpawn = Instantiate(targets[i], randomPos + offset, Quaternion.identity);
+                grid.gridP1[x, y].GetComponent<Tile>().ConnectToTarget(targetToSpawn);
+
+                i++;
+            }
         }
     }
 }

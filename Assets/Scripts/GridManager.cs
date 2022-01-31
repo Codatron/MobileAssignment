@@ -10,6 +10,7 @@ public class GridManager : MonoBehaviour
 
     public int width;
     public int height;
+    public int widthOffset;
     public Vector2Int gridStartPosP1;
     public Vector2Int gridOffsetP1;
     public Vector2Int gridStartPosP2;
@@ -26,24 +27,22 @@ public class GridManager : MonoBehaviour
         //GenerateGrid(width, height, gridStartPosP2);  
 
         // Adjusts the camera so that 0, 0 is in the bottom left corner (almost)
-        cam.transform.position = new Vector3(width / 2, (height / 2) + height, -10f); 
+        //cam.transform.position = new Vector3(width / 2, (height / 2) + height, -10f); 
     }
 
     public void GenerateGrid(int w, int h, Vector2Int sPos)
     {
-        //widthOffset = w + sPos.x;
-        //heightOffset = h + sPos.y;
+        gridP1 = new GameObject[w, h];
+        
+        gridOffsetP1.x = sPos.x;
+        gridOffsetP1.y = sPos.y;
 
-        gridOffsetP1.x = w + sPos.x;
-        gridOffsetP1.y = h + sPos.y;
-
-        gridP1 = new GameObject[gridOffsetP1.x, gridOffsetP1.y];
-
-        for (int x = sPos.x; x < gridOffsetP1.x; x++)
+        for (int x = 0; x < w; x++)
         {
-            for (int y = sPos.y; y < gridOffsetP1.y; y++)
+            for (int y = 0; y < h; y++)
             {
-                gridP1[x, y] = Instantiate(tilePrefab, new Vector2(x, y), Quaternion.identity);
+                gridP1[x, y] = Instantiate(tilePrefab, new Vector2(x + gridOffsetP1.x, y + gridOffsetP1.y), Quaternion.identity);
+                gridP1[x, y].name = $"Tile {x + gridOffsetP1.x} {y + gridOffsetP1.y}";
 
                 var isOffset = (x % 2 == 0 && y % 2 != 0) || (x % 2 != 0 && y % 2 == 0);
                 gridP1[x, y].GetComponent<Tile>().SetColor(isOffset);
@@ -60,7 +59,6 @@ public class GridManager : MonoBehaviour
     //        for (int y = 0; y < height; y++)
     //        {
     //            grid[x, y] = Instantiate(tilePrefab, new Vector2(x - (width / 2), y + (height / 2)), Quaternion.identity);
-    //            grid[x, y].name = $"Tile {x} {y}";
 
     //            var isOffset = (x % 2 == 0 && y % 2 != 0) || (x % 2 != 0 && y % 2 == 0);
     //            grid[x, y].GetComponent<Tile>().SetColor(isOffset);
