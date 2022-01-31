@@ -15,6 +15,10 @@ public class ScoreManager : MonoBehaviour
     private int totalItemsFound;
 
 
+    private void Start()
+    {
+        UpdateItemsRemainingDisplay(totalItems);
+    }
 
     public int AddMouseClicks(int mouseClicks)
     {

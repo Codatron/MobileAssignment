@@ -27,6 +27,7 @@ public class UIManagerGameOver : MonoBehaviour
         if (gameManager.isGameOver)
         {
             canvasGameOver.enabled = true;
+            buttonPause.SetActive(false);
         }
 
         if (gameManager.isPaused)

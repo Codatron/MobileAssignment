@@ -7,21 +7,42 @@ using TMPro;
 public class UIManagerMain : MonoBehaviour
 {
     public Canvas canvasMenu;
-    public Canvas canvasSettings;
+    public Canvas canvasGameMode;
+    public Canvas canvasSettingsSingle;
+    public Canvas canvasSettingsMultiplayer;
     public Canvas canvasHighScore;
-    public TMP_InputField inputName;
+    public TMP_InputField inputSingleP1;
+    public TMP_InputField inputMultiP1;
+    public TMP_InputField inputMultiP2;
+
+    //public TMP_InputField inputMultiplayerP1;
+    //public TMP_InputField inputMultiplayerP2;
 
     void Start()
     {
-        canvasSettings.enabled = false;
+        canvasGameMode.enabled = false;
+        canvasSettingsSingle.enabled = false;
+        canvasSettingsMultiplayer.enabled = false;
         canvasHighScore.enabled = false;
     }
 
     // Buttons in Menu
     public void NewGame()
     {
-        canvasSettings.enabled = true;
+        canvasGameMode.enabled = true;
         canvasMenu.enabled = false;
+    }
+
+    public void SinglePlayerMode()
+    {
+        canvasSettingsSingle.enabled = true;
+        canvasGameMode.enabled = false;
+    }
+
+    public void MultiplayerMode()
+    {
+        canvasSettingsMultiplayer.enabled = true;
+        canvasGameMode.enabled = false;
     }
 
     public SaveData LoadGame()
@@ -55,8 +76,18 @@ public class UIManagerMain : MonoBehaviour
     }
 
     // Save Button
-    public void Save()
+    public void SaveSingleP1()
     {
-        SaveManager.Instance.SaveName(inputName.text);
+        SaveManager.Instance.SaveNameSingleP1(inputSingleP1.text);
+    }
+
+    public void SaveMultiP1()
+    {
+        SaveManager.Instance.SaveNameMultiP1(inputMultiP1.text);
+    }
+
+    public void SaveMultiP2()
+    {
+        SaveManager.Instance.SaveNameMultiP2(inputMultiP2.text);
     }
 }

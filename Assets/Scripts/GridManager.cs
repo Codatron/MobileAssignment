@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
-    public GameObject[,] grid;
+    public GameObject[,] gridAI;
     public GameObject[,] gridP1;
     public GameObject[,] gridP2;
 
     public int width;
     public int height;
     public int widthOffset;
+    public Vector2Int gridStartPosAI;
+    public Vector2Int gridOffsetAI;
     public Vector2Int gridStartPosP1;
     public Vector2Int gridOffsetP1;
     public Vector2Int gridStartPosP2;
@@ -21,13 +23,34 @@ public class GridManager : MonoBehaviour
 
     void Start()
     {
-        GenerateGrid(width, height, gridStartPosP1);
+        //GenerateGrid(width, height, gridStartPosP1);
+        GenerateGridAI(width, height, gridStartPosAI);
 
         // TODO: Object out of range exception when gridP2 and SpawnP2 are on...WHY???
         //GenerateGrid(width, height, gridStartPosP2);  
 
         // Adjusts the camera so that 0, 0 is in the bottom left corner (almost)
         //cam.transform.position = new Vector3(width / 2, (height / 2) + height, -10f); 
+    }
+
+    public void GenerateGridAI(int w, int h, Vector2Int sPos)
+    {
+        gridAI = new GameObject[w, h];
+
+        gridOffsetAI.x = sPos.x;
+        gridOffsetAI.y = sPos.y;
+
+        for (int x = 0; x < w; x++)
+        {
+            for (int y = 0; y < h; y++)
+            {
+                gridAI[x, y] = Instantiate(tilePrefab, new Vector2(x + gridOffsetAI.x, y + gridOffsetAI.y), Quaternion.identity);
+                gridAI[x, y].name = $"Tile {x + gridOffsetAI.x} {y + gridOffsetAI.y}";
+
+                var isOffset = (x % 2 == 0 && y % 2 != 0) || (x % 2 != 0 && y % 2 == 0);
+                gridAI[x, y].GetComponent<Tile>().SetColor(isOffset);
+            }
+        }
     }
 
     public void GenerateGrid(int w, int h, Vector2Int sPos)

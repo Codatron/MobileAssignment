@@ -9,6 +9,6 @@ public class DisplayName : MonoBehaviour
 
     void Start()
     {
-        display.text = "Squirrel 1: " + SaveManager.Instance.saveData.Name;
+        display.text = "Squirrel 1: " + SaveManager.Instance.saveData.NameSingleP1;
     }
 }

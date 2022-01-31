@@ -970,7 +970,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 5
   height: 3
-  gridStartPosP1: {x: 0, y: 5}
+  widthOffset: 0
+  gridStartPosAI: {x: -2, y: -1}
+  gridOffsetAI: {x: 0, y: 0}
+  gridStartPosP1: {x: -2, y: 1}
   gridOffsetP1: {x: 0, y: 0}
   gridStartPosP2: {x: 0, y: 0}
   gridOffsetP2: {x: 0, y: 0}
@@ -2219,7 +2222,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Items Remaining: 2'
+  m_text: 'Items Remaining: 5'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3713,7 +3716,7 @@ GameObject:
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1846505758
 Transform:
   m_ObjectHideFlags: 0

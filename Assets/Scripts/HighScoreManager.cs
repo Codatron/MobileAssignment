@@ -30,6 +30,6 @@ public class HighScoreManager : MonoBehaviour
 
     void AddNewScore(string entryName, int entryScore)
     {
-        highScoreEntries.Add(new SaveData { Name = entryName, HighScore = entryScore });
+        highScoreEntries.Add(new SaveData { NameSingleP1 = entryName, HighScore = entryScore });
     }
 }

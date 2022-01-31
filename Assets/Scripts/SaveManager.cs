@@ -42,17 +42,32 @@ public class SaveManager : MonoBehaviour
     public string LoadFromFile(string fileName)
     {
         // Open a stream for the supplied file name as a text file
-        using (var stream = File.OpenText(fileName))
-        {
-            // Read the entire file and return the result. This assumes that we've written the
-            // file in UTF-8
-            return stream.ReadToEnd();
-        }
+        using var stream = File.OpenText(fileName);
+        
+        // Read the entire file and return the result. This assumes that we've written the file in UTF-8
+        return stream.ReadToEnd();
     }
 
-    public void SaveName(string name)
+    public void SaveNameSingleP1(string name)
     {
-        saveData.Name = name;
+        saveData.NameSingleP1 = name;
+        string json = JsonUtility.ToJson(saveData);
+        //PlayerPrefs.SetString("SaveData", json);
+
+        SaveToFile("saveFile", json);
+    }
+    public void SaveNameMultiP1(string name)
+    {
+        saveData.NameMultiP1 = name;
+        string json = JsonUtility.ToJson(saveData);
+        //PlayerPrefs.SetString("SaveData", json);
+
+        SaveToFile("saveFile", json);
+    }
+
+    public void SaveNameMultiP2(string name)
+    {
+        saveData.NameMultiP2 = name;
         string json = JsonUtility.ToJson(saveData);
         //PlayerPrefs.SetString("SaveData", json);
 

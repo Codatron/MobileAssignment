@@ -15,9 +15,31 @@ public class SpawnManager : MonoBehaviour
     {
         grid = GameObject.Find("GridManager").GetComponent<GridManager>();
 
-        SpawnMultiple(grid.gridStartPosP1, grid.width, grid.height);
+        SpawnMultipleAI(grid.gridStartPosAI, grid.width, grid.height);
+
+        //SpawnMultiple(grid.gridStartPosP1, grid.width, grid.height);
         //SpawnTargets(grid.gridStartPosP1, grid.gridOffsetP1);
         //SpawnTargets(grid.gridStartPosP2, grid.gridOffsetP2);
+    }
+    public void SpawnMultipleAI(Vector2Int offset, int w, int h)
+    {
+        int i = 0;
+
+        while (i < targets.Length)
+        {
+            int x = Random.Range(0, w);
+            int y = Random.Range(0, h);
+
+            Vector2 randomPos = new Vector2(x, y);
+
+            if (!grid.gridAI[x, y].GetComponent<Tile>().isOccupied)
+            {
+                var targetToSpawn = Instantiate(targets[i], randomPos + offset, Quaternion.identity);
+                grid.gridAI[x, y].GetComponent<Tile>().ConnectToTarget(targetToSpawn);
+
+                i++;
+            }
+        }
     }
 
     public void SpawnSingle(int gridWidth, int gridHeight)
@@ -52,4 +74,5 @@ public class SpawnManager : MonoBehaviour
             }
         }
     }
+
 }
